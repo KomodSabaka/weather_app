@@ -1,0 +1,46 @@
+name: weather_app
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^2.0.7
+  google_fonts: ^6.0.0
+  flutter_bloc: ^8.1.3
+  equatable: ^2.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^2.0.0
+
+
+flutter:
+
+
+  uses-material-design: true
+
+
+  assets:
+    - assets/icons/current_location_icon.png
+    - assets/icons/search_icon.png
+    - assets/icons/sunrise_icon.png
+    - assets/icons/sunset_icon.png
+    - assets/icons/humidity_icon.png
+    - assets/icons/pressure_icon.png
+    - assets/icons/uv_icon.png
+    - assets/icons/wind_icon.png
+
+
