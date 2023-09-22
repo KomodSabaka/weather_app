@@ -1,45 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import '../../blocs/weather_bloc/weather_bloc.dart';
+import '../widgets/box_widget.dart';
 
 class LocationDateTimeModule extends StatelessWidget {
   const LocationDateTimeModule({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints.expand(
-        width: 510,
-        height: 330,
-      ),
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: const [
-          BoxShadow(
-            offset: Offset(10, 10),
-            blurRadius: 4,
-            color: Color(0x60000000),
-          ),
-        ],
-      ),
+    var weatherStateBloc =
+        BlocProvider.of<WeatherBloc>(context).state as WeatherLoaded;
+
+    int localTimeEpoch = weatherStateBloc.weather.location!.localtimeEpoch!;
+    DateTime dateTime =
+        DateTime.fromMillisecondsSinceEpoch(localTimeEpoch * 1000);
+    String formattedDate = DateFormat('EEEE, dd MMM').format(dateTime);
+    String formattedTime = DateFormat('HH:mm').format(dateTime);
+
+    return BoxWidget(
+      width: 510,
+      height: 330,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'City',
+            weatherStateBloc.weather.location!.name!,
             style: Theme.of(context)
                 .textTheme
                 .displayMedium!
                 .copyWith(fontSize: 36),
           ),
           Text(
-            '22:00',
+            formattedTime,
             style: Theme.of(context)
                 .textTheme
                 .displayMedium!
                 .copyWith(fontSize: 96),
           ),
           Text(
-            'Thursday, 31 Aug',
+            formattedDate,
             style:
                 Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 20),
           ),

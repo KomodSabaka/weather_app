@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../common/constants/assets_path.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/features/blocs/weather_bloc/weather_bloc.dart';
+import '../../../common/constants/assets_paths.dart';
 
 class LocationSearchButton extends StatelessWidget {
   final Size imageSize;
@@ -13,13 +14,14 @@ class LocationSearchButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () =>
+          BlocProvider.of<WeatherBloc>(context).add(const GetForecastEvent()),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            AssetPath.currentLocationIcon,
+            AssetPaths.currentLocationIcon,
             height: imageSize.height,
             width: imageSize.width,
           ),

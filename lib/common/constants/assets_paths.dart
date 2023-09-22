@@ -1,4 +1,4 @@
-class AssetPath {
+class AssetPaths {
   static const String currentLocationIcon =
       'assets/icons/current_location_icon.png';
   static const String searchIcon = 'assets/icons/search_icon.png';

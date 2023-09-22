@@ -1,14 +1,22 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/app_layout.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/common/thems/app_theme.dart';
-import 'package:weather_app/features/blocs/theme_cubit/theme_cubit.dart';
+import 'package:weather_app/features/providers/theme_provider.dart';
+import 'package:weather_app/features/blocs/weather_bloc/weather_bloc.dart';
+import 'common/services/locator.dart';
+import 'features/ui/layouts/app_layout.dart';
 
-void main() {
+void main() async {
+  await setupLocator();
   runApp(
     BlocProvider(
-      create: (context) => ThemeCubit(),
-      child: MyApp(),
+      create: (context) => WeatherBloc(),
+      child: ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -18,14 +26,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, bool>(
-      builder: (context, state) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: state ? AppTheme().light : AppTheme().dark,
-          home: const AppLayout(),
-        );
-      },
+    var themeProvider = Provider.of<ThemeProvider>(context);
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {PointerDeviceKind.mouse},
+      ),
+      theme: themeProvider.nowLightTheme ? AppTheme().light : AppTheme().dark,
+      home: const AppLayout(),
     );
   }
 }
